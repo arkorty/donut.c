@@ -20,4 +20,4 @@ These programs print a spinning ASCII torus (mathematical name for a doughnut-sh
 * `make clean` to delete the executable
 
 # Screenshot
-![screenshot](https://github.com/arkorty/Spinning-ASCII-Torus/blob/main/blob/screenshot.png)
+![screenshot](https://github.com/arkorty/Spinning-ASCII-Torus/blob/master/blob/screenshot.png)
