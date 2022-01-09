@@ -6,12 +6,16 @@
 #include <unistd.h>
 
 #define clear_terminal() printf("\e[1;1H\e[2J"); // Clears the terminal
+#define STEP_ROT_X 0.0093
+#define STEP_ROT_Y 0.0048
+#define STEP_THETA 0.031
+#define STEP_PHI 0.016
 
 // Function allocates memory for the frame buffer
 char **allocate_memory(int size) {
     char **array = malloc(size * sizeof(char *));
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; ++i)
         array[i] = malloc(size * sizeof(char));
 
     return array;
@@ -33,14 +37,17 @@ int get_terminal_size() {
 
 // Function dumps the frame into the terminal
 void dump_frame(char **frame, int size) {
-    for (int i = 0; i < size; i++)
-        printf("%s\n", frame[i]);
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j)
+            putchar(frame[i][j]);
+        putchar('\n');
+    }
 }
 
 // Function builds the frame and returns the frame buffer
 char **build_frame(char **frame, int frame_num, int size, int K) {
-    float x = frame_num * 0.0093; // Rotational speed around the x axis
-    float y = frame_num * 0.0048; // Rotational speed around the y axis
+    float x = frame_num * STEP_ROT_X; // Rotational speed around the x axis
+    float y = frame_num * STEP_ROT_Y; // Rotational speed around the y axis
 
     float cos_x = cos(x), sin_x = sin(x); // Precomputing sines and cosines of x
     float cos_y = cos(y), sin_y = sin(y); // Precomputing sines and cosines of y
@@ -48,20 +55,20 @@ char **build_frame(char **frame, int frame_num, int size, int K) {
     float z_buffer[size][size]; // Declaring buffer for storing z coordinates
 
     // Initializing frame buffer and z buffer
-    for (int i = 0; i < size; i++)
-        for (int j = 0; j < size; j++) {
+    for (int i = 0; i < size; ++i)
+        for (int j = 0; j < size; ++j) {
             frame[i][j] = ' ';
             z_buffer[i][j] = 0;
         }
 
     // Loop uses theta to revolve a point around the center of the circle
     // 6.283186 = 2 * Pi = 360°
-    for (float theta = 0; theta < 6.283186; theta += 0.031) {
+    for (float theta = 0; theta < 6.283186; theta += STEP_THETA) {
         // Precomputing sines and cosines of theta
         float cos_theta = cos(theta), sin_theta = sin(theta);
 
         // Loop uses phi to revolve the circle around the center of the torus
-        for (float phi = 0; phi < 6.283186; phi += 0.016) {
+        for (float phi = 0; phi < 6.283186; phi += STEP_PHI) {
             // Precomputing sines and cosines of phi
             float cos_phi = cos(phi), sin_phi = sin(phi);
 
