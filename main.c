@@ -5,16 +5,19 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-#define clear_terminal() printf("\e[1;1H\e[2J"); // Clears the terminal
 #define STEP_ROT_X 0.0093
 #define STEP_ROT_Y 0.0048
 #define STEP_THETA 0.031
 #define STEP_PHI 0.016
 
+// Clears the terminal
+void clear_terminal() {
+    printf("\e[1;1H\e[2J");
+}
+
 // Function allocates memory for the frame buffer
 char **allocate_memory(int size) {
     char **array = malloc(size * sizeof(char *));
-
     for (int i = 0; i < size; ++i)
         array[i] = malloc(size * sizeof(char));
 
@@ -26,13 +29,10 @@ int get_terminal_size() {
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
-    int win_row_size = (int)w.ws_row;
-    int win_col_size = (int)w.ws_col;
-
-    if (win_row_size < win_col_size)
-        return win_row_size;
+    if (w.ws_row < w.ws_col)
+        return w.ws_row;
     else
-        return win_col_size;
+        return w.ws_col;
 }
 
 // Function dumps the frame into the terminal
@@ -45,9 +45,9 @@ void dump_frame(char **frame, int size) {
 }
 
 // Function builds the frame and returns the frame buffer
-char **build_frame(char **frame, int frame_num, int size, int K) {
-    float x = frame_num * STEP_ROT_X; // Rotational speed around the x axis
-    float y = frame_num * STEP_ROT_Y; // Rotational speed around the y axis
+char **build_frame(char **frame, int size, int frmno, int k) {
+    float x = frmno * STEP_ROT_X; // Rotational speed around the x axis
+    float y = frmno * STEP_ROT_Y; // Rotational speed around the y axis
 
     float cos_x = cos(x), sin_x = sin(x); // Precomputing sines and cosines of x
     float cos_y = cos(y), sin_y = sin(y); // Precomputing sines and cosines of y
@@ -89,8 +89,8 @@ char **build_frame(char **frame, int frame_num, int size, int K) {
             float z_inv = 1 / z;
 
             // Calculating x and y coordinates of the 2D projection
-            int x_proj = size / 2 + K * z_inv * x;
-            int y_proj = size / 2 - K * z_inv * y;
+            int x_proj = size / 2 + k * z_inv * x;
+            int y_proj = size / 2 - k * z_inv * y;
 
             // Calculating luminous intensity
             float lumi_int =
@@ -128,11 +128,11 @@ int main() {
     char **frame = allocate_memory(size);
 
     // Loop rotates the torus around both the axes
-    for (int frame_num = 0; true; frame_num++) {
+    for (int frmno = 0; true; frmno++) {
 
         // Building and dumping the frame into the terminal
-        int konst = size * 5 * 3 / (8 * (1 + 2));
-        dump_frame(build_frame(frame, frame_num, size, konst), size);
+        int k = size * 5 * 3 / (8 * (1 + 2));
+        dump_frame(build_frame(frame, size, frmno, k), size);
 
         // Clears the screen
         clear_terminal();
