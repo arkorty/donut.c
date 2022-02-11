@@ -26,7 +26,7 @@ Prints a spinning ASCII torus (mathematical name for a doughnut-shaped object) o
 
 ## How to run the C version
 
-* Run `.\main.exe` in the shell to run the program
+* Type `.\main.exe` in the shell to run the program
 
 # For Linux
 
