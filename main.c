@@ -2,17 +2,35 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#if defined(_WIN32)
+#define WIN32_LEAN_AND_MEAN
+#define VC_EXTRALEAN
+#include <Windows.h>
+#define STEP_ROT_X 0.0186
+#define STEP_ROT_Y 0.0096
+#define STEP_THETA 0.063
+#define STEP_PHI 0.031
+#elif defined(__linux__)
 #include <sys/ioctl.h>
 #include <unistd.h>
-
 #define STEP_ROT_X 0.0093
 #define STEP_ROT_Y 0.0048
 #define STEP_THETA 0.031
 #define STEP_PHI 0.016
+#endif
 
 // Clears the terminal
 void clear_terminal() {
+#if defined(_WIN32)
+    HANDLE hOut;
+    COORD Position;
+    hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    Position.X = 0;
+    Position.Y = 0;
+    SetConsoleCursorPosition(hOut, Position);
+#elif defined(__linux__)
     printf("\e[1;1H\e[2J");
+#endif
 }
 
 // Function allocates memory for the frame buffer
@@ -25,14 +43,20 @@ char **allocate_memory(int size) {
 }
 
 // Function gets the size of the terminal
-int get_terminal_size() {
+int terminal_size() {
+    int size;
+#if defined(_WIN32)
+    CONSOLE_SCREEN_BUFFER_INFO c;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &c);
+    int row = (int)(c.srWindow.Bottom - c.srWindow.Top + 1);
+    int col = (int)(c.srWindow.Right - c.srWindow.Left + 1);
+    size = row < col ? row : col;
+#elif defined(__linux__)
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-
-    if (w.ws_row < w.ws_col)
-        return w.ws_row;
-    else
-        return w.ws_col;
+    size = w.ws_row < w.ws_col ? (int)w.ws_row : (int)w.ws_col;
+#endif
+    return size;
 }
 
 // Function dumps the frame into the terminal
@@ -122,7 +146,7 @@ char **build_frame(char **frame, int size, int frmno, int k) {
 
 int main() {
     // Getting the size of the terminal
-    const int size = get_terminal_size();
+    const int size = terminal_size();
 
     // Allocating memory to the frame buffer
     char **frame = allocate_memory(size);
