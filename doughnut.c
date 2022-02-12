@@ -6,10 +6,10 @@
 #define WIN32_LEAN_AND_MEAN
 #define VC_EXTRALEAN
 #include <Windows.h>
-#define STEP_ROT_X 0.0186
-#define STEP_ROT_Y 0.0096
-#define STEP_THETA 0.063
-#define STEP_PHI 0.031
+#define STEP_ROT_X 0.1488
+#define STEP_ROT_Y 0.0768
+#define STEP_THETA 0.126
+#define STEP_PHI 0.063
 #elif defined(__linux__)
 #include <sys/ioctl.h>
 #include <unistd.h>
