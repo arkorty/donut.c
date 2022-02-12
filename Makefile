@@ -4,12 +4,12 @@ deb:
 arch:
 	@sudo pacman -S gcc python3
 
-c: main.c
-	@gcc -o main.out main.c -lm
-	@./main.out
+c: doughnut.c
+	@gcc -o doughnut.out doughnut.c -lm
+	@./doughnut.out
 
-py: main.py
-	@python3 main.py
+py: doughnut.py
+	@python3 doughnut.py
 
-clean: main.out
-	@rm main.out
+clean: doughnut.out
+	@rm doughnut.out
