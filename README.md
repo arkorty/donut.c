@@ -17,16 +17,16 @@ Prints a spinning ASCII torus (mathematical name for a doughnut-shaped object) o
 
 ## How to run the Python version
 
-* Type `python main.py` in the shell to run the Python version
+* Type `python doughnut.py` in the shell to run the Python version
 
 ## How to compile the C version
 
-* Type `gcc -o main.exe main.c -lm` in the shell to compile using GCC
-* Type `clang -o main.exe main.c -lm` in the shell to compile using Clang
+* Type `gcc -o doughnut.exe doughnut.c -lm` in the shell to compile using GCC
+* Type `clang -o doughnut.exe doughnut.c -lm` in the shell to compile using Clang
 
 ## How to run the C version
 
-* Type `.\main.exe` in the shell to run the program
+* Type `.\doughnut.exe` in the shell to run the program
 
 # For Linux
 
@@ -47,7 +47,7 @@ Prints a spinning ASCII torus (mathematical name for a doughnut-shaped object) o
 
 ## How to clean up the executable
 
-* `make clean` to clean after execution
+* `make clean` to clean up after execution
 
 # Updates
 
