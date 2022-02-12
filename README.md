@@ -27,6 +27,7 @@ Prints a spinning ASCII torus (mathematical name for a doughnut-shaped object) o
 ## How to run the C version
 
 * Type `.\doughnut.exe` in the shell to run the program
+* You can also double-click on the executable (a.k.a. a dot-exe file) to run it
 
 # For Linux
 
