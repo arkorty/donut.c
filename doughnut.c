@@ -2,21 +2,22 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #if defined(_WIN32)
 #define WIN32_LEAN_AND_MEAN
 #define VC_EXTRALEAN
 #include <Windows.h>
-#define STEP_ROT_X 0.1488
-#define STEP_ROT_Y 0.0768
-#define STEP_THETA 0.126
-#define STEP_PHI 0.063
+#define STEP_ROT_X 0.157079633
+#define STEP_ROT_Y 0.078539816
+#define STEP_THETA 0.130899694
+#define STEP_ALPHA 0.065449847
 #elif defined(__linux__)
 #include <sys/ioctl.h>
 #include <unistd.h>
-#define STEP_ROT_X 0.0093
-#define STEP_ROT_Y 0.0048
-#define STEP_THETA 0.031
-#define STEP_PHI 0.016
+#define STEP_ROT_X 0.012271846
+#define STEP_ROT_Y 0.006135923
+#define STEP_THETA 0.024543693
+#define STEP_ALPHA 0.016028534
 #endif
 
 // Clears the terminal
@@ -91,23 +92,25 @@ char **build_frame(char **frame, int size, int frmno, int k) {
         // Precomputing sines and cosines of theta
         float cos_theta = cos(theta), sin_theta = sin(theta);
 
-        // Loop uses phi to revolve the circle around the center of the torus
-        for (float phi = 0; phi < 6.283186; phi += STEP_PHI) {
-            // Precomputing sines and cosines of phi
-            float cos_phi = cos(phi), sin_phi = sin(phi);
+        // Loop uses alpha to revolve the circle around the center of the torus
+        for (float alpha = 0; alpha < 6.283186; alpha += STEP_ALPHA) {
+            // Precomputing sines and cosines of alpha
+            float cos_alpha = cos(alpha), sin_alpha = sin(alpha);
 
             // Calculating the x and y coordinates of the circle before the
             // revolution
             float circle_x = 2 + 1 * cos_theta, circle_y = 1 * sin_theta;
 
             // Calculating the x and y coordinates after the revolution
-            float x = circle_x * (cos_y * cos_phi + sin_x * sin_y * sin_phi) -
-                      circle_y * cos_x * sin_y;
-            float y = circle_x * (sin_y * cos_phi - sin_x * cos_y * sin_phi) +
-                      circle_y * cos_x * cos_y;
+            float x =
+                circle_x * (cos_y * cos_alpha + sin_x * sin_y * sin_alpha) -
+                circle_y * cos_x * sin_y;
+            float y =
+                circle_x * (sin_y * cos_alpha - sin_x * cos_y * sin_alpha) +
+                circle_y * cos_x * cos_y;
 
             // Calculating z
-            float z = 5 + cos_x * circle_x * sin_phi + circle_y * sin_x;
+            float z = 5 + cos_x * circle_x * sin_alpha + circle_y * sin_x;
 
             // Calculating the inverse of z
             float z_inv = 1 / z;
@@ -118,9 +121,9 @@ char **build_frame(char **frame, int size, int frmno, int k) {
 
             // Calculating luminous intensity
             float lumi_int =
-                cos_phi * cos_theta * sin_y - cos_x * cos_theta * sin_phi -
+                cos_alpha * cos_theta * sin_y - cos_x * cos_theta * sin_alpha -
                 sin_x * sin_theta +
-                cos_y * (cos_x * sin_theta - cos_theta * sin_x * sin_phi);
+                cos_y * (cos_x * sin_theta - cos_theta * sin_x * sin_alpha);
 
             /* Checking if surface is pointing away from the point of view
              * Also checking if the point is closer than any other point
@@ -144,22 +147,44 @@ char **build_frame(char **frame, int size, int frmno, int k) {
     return frame;
 }
 
-int main() {
+int main(int argc, char **argv) {
+
     // Getting the size of the terminal
-    const int size = terminal_size();
+    int size = terminal_size();
 
     // Allocating memory to the frame buffer
     char **frame = allocate_memory(size);
 
-    // Loop rotates the torus around both the axes
-    for (int frmno = 0; true; frmno++) {
+    int k = size * 5 * 3 / (8 * (1 + 2));
 
-        // Building and dumping the frame into the terminal
-        int k = size * 5 * 3 / (8 * (1 + 2));
-        dump_frame(build_frame(frame, size, frmno, k), size);
+    if (argc > 1 && (strcmp(argv[1], "-d") == 0 ||
+                     strcmp(argv[1], "--enable-dynamic-resolution") == 0)) {
+        // Loop rotates the torus around both the axes
+        for (int frmno = 0; true; frmno++) {
+            if (frmno % 256 == 1 && size - terminal_size() != 0) {
+                // Getting the size of the terminal
+                size = terminal_size();
 
-        // Clears the screen
-        clear_terminal();
+                // Allocating memory to the frame buffer
+                frame = allocate_memory(size);
+
+                k = size * 5 * 3 / (8 * (1 + 2));
+            }
+
+            // Building and dumping the frame into the terminal
+            dump_frame(build_frame(frame, size, frmno, k), size);
+
+            // Clears the screen
+            clear_terminal();
+        }
+    } else {
+        for (int frmno = 0; true; frmno++) {
+            // Building and dumping the frame into the terminal
+            dump_frame(build_frame(frame, size, frmno, k), size);
+
+            // Clears the screen
+            clear_terminal();
+        }
     }
 
     return 0;
