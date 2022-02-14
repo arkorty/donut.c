@@ -70,9 +70,9 @@ void dump_frame(char **frame, int size) {
 }
 
 // Function builds the frame and returns the frame buffer
-char **build_frame(char **frame, int size, int frmno, int k) {
-    float x = frmno * STEP_ROT_X; // Rotational speed around the x axis
-    float y = frmno * STEP_ROT_Y; // Rotational speed around the y axis
+char **build_frame(char **frame, int size, int i, int k) {
+    float x = i * STEP_ROT_X; // Rotational speed around the x axis
+    float y = i * STEP_ROT_Y; // Rotational speed around the y axis
 
     float cos_x = cos(x), sin_x = sin(x); // Precomputing sines and cosines of x
     float cos_y = cos(y), sin_y = sin(y); // Precomputing sines and cosines of y
@@ -160,8 +160,8 @@ int main(int argc, char **argv) {
     if (argc > 1 && (strcmp(argv[1], "-d") == 0 ||
                      strcmp(argv[1], "--enable-dynamic-resolution") == 0)) {
         // Loop rotates the torus around both the axes
-        for (int frmno = 0; true; frmno++) {
-            if (frmno % 256 == 1 && size - terminal_size() != 0) {
+        for (int i = 0; true; i++) {
+            if (i % 256 == 1 && size - terminal_size() != 0) {
                 // Getting the size of the terminal
                 size = terminal_size();
 
@@ -172,15 +172,15 @@ int main(int argc, char **argv) {
             }
 
             // Building and dumping the frame into the terminal
-            dump_frame(build_frame(frame, size, frmno, k), size);
+            dump_frame(build_frame(frame, size, i, k), size);
 
             // Clears the screen
             clear_terminal();
         }
     } else {
-        for (int frmno = 0; true; frmno++) {
+        for (int i = 0; true; ++i) {
             // Building and dumping the frame into the terminal
-            dump_frame(build_frame(frame, size, frmno, k), size);
+            dump_frame(build_frame(frame, size, i, k), size);
 
             // Clears the screen
             clear_terminal();
