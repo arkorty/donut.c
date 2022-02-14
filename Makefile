@@ -4,11 +4,16 @@ deb:
 arch:
 	@sudo pacman -S gcc python3
 
-c: doughnut.c
+build: doughnut.c
 	@gcc -o doughnut.out doughnut.c -lm
+
+run-c: doughnut.out
 	@./doughnut.out
 
-py: doughnut.py
+run-cd: doughnut.out
+	@./doughnut.out --enable-dynamic-resolution
+
+run-py: doughnut.py
 	@python3 doughnut.py
 
 clean: doughnut.out
