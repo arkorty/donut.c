@@ -19,7 +19,7 @@ Prints a spinning ASCII torus (mathematical name for a doughnut-shaped object) o
 
 * Type `python doughnut.py` in the shell to run the Python version
 
-## How to compile the C version
+## How to compile or build the C version
 
 * Type `gcc -o doughnut.exe doughnut.c -lm` in the shell to compile using GCC
 * Type `clang -o doughnut.exe doughnut.c -lm` in the shell to compile using Clang
@@ -27,6 +27,7 @@ Prints a spinning ASCII torus (mathematical name for a doughnut-shaped object) o
 ## How to run the C version
 
 * Type `.\doughnut.exe` in the shell to run the program
+* Type `.\doughnut.exe --enable-dynamic-resolution`  in the shell to run the program with dynamic resolution enabled
 * You can also double-click on the executable (a.k.a. a dot-exe file) to run it
 
 # For Linux
@@ -41,12 +42,17 @@ Prints a spinning ASCII torus (mathematical name for a doughnut-shaped object) o
 * `sudo pacman -S make` to install Make
 * `make arch` to install the required compilers
 
+## How to compile C version
+
+* `make build` to compile the C version
+
 ## How to run the programs
 
-* `make c` to run the C version
+* `make run-c` to run the C version
+* `make run-cd` to run the C version with dynamic resolution enabled
 * `make py` to run the Python version
 
-## How to clean up the executable
+## How to clean up the C executable
 
 * `make clean` to clean up after execution
 
@@ -54,6 +60,7 @@ Prints a spinning ASCII torus (mathematical name for a doughnut-shaped object) o
 
 * Added support for dynamic resolution based on current terminal size
 * Added Windows support
+* Added support for dynamic resolution within the same session
 
 # Screenshot
 
