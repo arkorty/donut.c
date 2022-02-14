@@ -60,7 +60,7 @@ Prints a spinning ASCII torus (mathematical name for a doughnut-shaped object) o
 
 * Added support for dynamic resolution based on current terminal size
 * Added Windows support
-* Added support for dynamic resolution within the same session
+* Added support for on the fly dynamic resolution
 
 # Screenshot
 
