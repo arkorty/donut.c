@@ -50,7 +50,7 @@ Prints a spinning ASCII torus (mathematical name for a doughnut-shaped object) o
 
 * `make run-c` to run the C version
 * `make run-cd` to run the C version with dynamic resolution enabled
-* `make py` to run the Python version
+* `make run-py` to run the Python version
 
 ## How to clean up the C executable
 
