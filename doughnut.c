@@ -148,7 +148,6 @@ char **build_frame(char **frame, int size, int i, int k) {
 }
 
 int main(int argc, char **argv) {
-
     // Getting the size of the terminal
     int size = terminal_size();
 
