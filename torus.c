@@ -153,33 +153,32 @@ int main(int argc, char **argv) {
     int frames = 0;
 
     if (argc > 1) {
-        if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0) {
-            printf("Usage: torus [OPTION]...\n\
+        for (int i = 1; i < argc; ++i) {
+            if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
+                printf("Usage: torus [OPTION]...\n\
 Puts a spinning ASCII torus on the terminal.\n\
 \n\
 Options:\n\
   -f, --frames              number of frames to be rendered\n\
   -d, --dynamic             enables dynamic resolution\n\
-  -h, --help                displays this help screen\n\
+  -h, --help                displays this help screen and exits\n\
 \n\
 Examples:\n\
-  torus --help              displays this help screen\n\
+  torus --help              displays this help screen and exits\n\
   torus -f 1024             renders 1024 frames\n\
   torus --frames 512 -d     renders 512 frames with dynamic resolution enabled\n\
   torus --dynamic -f 256    renders 256 frames with dynamic resolution enabled\n\
 \n\
 Copyright (c) 2021 Arkaprabha Chakraborty\n");
-            return 0;
-        } else {
-            for (int i = 1; i < argc; ++i) {
-                if (strcmp(argv[i], "-f") == 0 ||
-                    strcmp(argv[i], "--frames") == 0 && i + 1 < argc) {
-                    limit = true;
-                    frames = atoi(argv[i + 1]);
-                } else if (strcmp(argv[i], "-d") == 0 ||
-                           strcmp(argv[i], "--dynamic") == 0) {
-                    dyna = true;
-                }
+                return 0;
+            } else if ((strcmp(argv[i], "-f") == 0 ||
+                        strcmp(argv[i], "--frames") == 0) &&
+                       i + 1 < argc) {
+                limit = true;
+                frames = atoi(argv[i + 1]);
+            } else if (strcmp(argv[i], "-d") == 0 ||
+                       strcmp(argv[i], "--dynamic") == 0) {
+                dyna = true;
             }
         }
     }
