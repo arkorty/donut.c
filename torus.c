@@ -199,7 +199,9 @@ Copyright (c) 2021 Arkaprabha Chakraborty\n");
                 screen_dist = term_size * 5 * 3 / (8 * (1 + 2));
             }
 
-            // Building, dumping and clearing the frame into the terminal
+            // Building the frame
+            // Dumping the frame into the terminal
+            // Clearing the frame from the terminal
             buffer = build_frame(buffer, term_size, i, screen_dist);
             dump_frame(buffer, term_size);
             clear_terminal();
@@ -213,7 +215,9 @@ Copyright (c) 2021 Arkaprabha Chakraborty\n");
         screen_dist = term_size * 5 * 3 / (8 * (1 + 2));
 
         for (int i = 0; !limit || i < frames; ++i) {
-            // Building, dumping and clearing the frame into the terminal
+            // Building the frame
+            // Dumping the frame into the terminal
+            // Clearing the frame from the terminal
             buffer = build_frame(buffer, term_size, i, screen_dist);
             dump_frame(buffer, term_size);
             clear_terminal();
