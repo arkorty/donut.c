@@ -165,11 +165,7 @@ Options:\n\
 \n\
 Examples:\n\
   torus --help              displays this help screen and exits\n\
-  torus -f 1024             renders 1024 frames\n\
-  torus --frames 512 -d     renders 512 frames with dynamic resolution enabled\n\
-  torus --dynamic -f 256    renders 256 frames with dynamic resolution enabled\n\
-\n\
-Copyright (c) 2021 Arkaprabha Chakraborty\n");
+  torus --dynamic -f 256    renders 256 frames with dynamic resolution enabled\n");
                 return 0;
             } else if ((strcmp(argv[i], "-f") == 0 ||
                         strcmp(argv[i], "--frames") == 0) &&
