@@ -31,7 +31,7 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 
 ## How to compile and run
 
-* `gcc torus.out -o torus.out -lm` to compile
+* `gcc torus.c -o torus.out -lm` to compile
 * `./torus.out` to run
 
 # Updates
