@@ -12,7 +12,7 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 
 ## Prerequisites for Windows
 
-* Install a compiler like [GCC](https://gcc.gnu.org/) or [Clang](https://clang.llvm.org/) for the C version
+* Install a compiler like [GCC](https://gcc.gnu.org/) or [Clang](https://clang.llvm.org/)
 
 ## How to build and run
 
