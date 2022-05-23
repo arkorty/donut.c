@@ -70,7 +70,7 @@ void dump_frame(char **buffer, int term_size) {
 }
 
 // Function builds the frame and returns the frame buffer
-char **build_frame(char **buffer, int term_size, int i, int screen_dist) {
+char **build_frame(char **buffer, int term_size, int i, int scrn_dist) {
     float x = i * STEP_ROT_X; // Rotational speed around the x axis
     float y = i * STEP_ROT_Y; // Rotational speed around the y axis
 
@@ -117,8 +117,8 @@ char **build_frame(char **buffer, int term_size, int i, int screen_dist) {
             float z_inv = 1 / z;
 
             // Calculating x and y coordinates of the 2D projection
-            int x_proj = term_size / 2 + screen_dist * z_inv * x;
-            int y_proj = term_size / 2 - screen_dist * z_inv * y;
+            int x_proj = term_size / 2 + scrn_dist * z_inv * x;
+            int y_proj = term_size / 2 - scrn_dist * z_inv * y;
 
             // Calculating luminous intensity
             float lumi_int =
@@ -148,14 +148,8 @@ char **build_frame(char **buffer, int term_size, int i, int screen_dist) {
     return buffer;
 }
 
-int main(int argc, char **argv) {
-    bool dyna = false, limit = false;
-    int frames = 0;
-
-    if (argc > 1) {
-        for (int i = 1; i < argc; ++i) {
-            if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
-                printf("Usage: torus [OPTION]...\n\
+void help(char *prog_name) {
+    printf("Usage: %s [OPTION]...\n\
 Puts a spinning ASCII torus on the terminal.\n\
 \n\
 Options:\n\
@@ -164,8 +158,54 @@ Options:\n\
   -h, --help                displays this help screen and exits\n\
 \n\
 Examples:\n\
-  torus --help              displays this help screen and exits\n\
-  torus --dynamic -f 256    renders 256 frames with dynamic resolution enabled\n");
+  %s --help          displays this help screen and exits\n\
+  %s -d -f 256       renders 256 frames with dynamic resolution enabled\n",
+           prog_name, prog_name, prog_name);
+}
+
+void runner(bool dynamic, bool limit, int frames) {
+    // Allocating memory to the frame buffer according to terminal size
+    int term_size = terminal_size();
+    int scrn_dist = term_size * 5 * 3 / (8 * (1 + 2));
+    char **buffer = allocate_memory(term_size);
+
+    // Loop rotates the torus around both the axes
+    for (int i = 0; !limit || i < frames; ++i) {
+        if (dynamic && i % 32 == 0 && term_size - terminal_size() != 0) {
+            // Frees the old frame buffer
+            free(buffer);
+
+            // Reallocates the frame buffer as per new terminal size
+            term_size = terminal_size();
+            buffer = allocate_memory(term_size);
+
+            // Calculates screen distance based on terminal size
+            scrn_dist = term_size * 5 * 3 / (8 * (1 + 2));
+        }
+
+        // Building the frame
+        buffer = build_frame(buffer, term_size, i, scrn_dist);
+
+        // Dumping the frame into the terminal
+        dump_frame(buffer, term_size);
+
+        // Clearing the frame from the terminal
+        clear_terminal();
+    }
+}
+
+int main(int argc, char **argv) {
+    bool limit = false;
+    bool dynamic = false;
+    int frames = 0;
+    if (argc > 1) {
+        for (int i = 1; i < argc; ++i) {
+            if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
+#if defined(_WIN32)
+                help("torus.exe");
+#elif defined(__linux__)
+                help("torus.out");
+#endif
                 return 0;
             } else if ((strcmp(argv[i], "-f") == 0 ||
                         strcmp(argv[i], "--frames") == 0) &&
@@ -174,51 +214,13 @@ Examples:\n\
                 frames = atoi(argv[i + 1]);
             } else if (strcmp(argv[i], "-d") == 0 ||
                        strcmp(argv[i], "--dynamic") == 0) {
-                dyna = true;
+                dynamic = true;
             }
         }
     }
 
-    int term_size = 0, screen_dist = 0;
-    char **buffer = NULL;
-
-    if (dyna) {
-        // Loop rotates the torus around both the axes
-        for (int i = 0; !limit || i < frames; ++i) {
-            if (i % 32 == 0 && term_size - terminal_size() != 0) {
-                // Allocating memory to the frame buffer according to terminal
-                // size
-                term_size = terminal_size();
-                buffer = allocate_memory(term_size);
-
-                // Calculation screen distance based on terminal size
-                screen_dist = term_size * 5 * 3 / (8 * (1 + 2));
-            }
-
-            // Building the frame
-            // Dumping the frame into the terminal
-            // Clearing the frame from the terminal
-            buffer = build_frame(buffer, term_size, i, screen_dist);
-            dump_frame(buffer, term_size);
-            clear_terminal();
-        }
-    } else if (!dyna) {
-        // Allocating memory to the frame buffer according to terminal size
-        int term_size = terminal_size();
-        char **buffer = allocate_memory(term_size);
-
-        // Calculation screen distance based on terminal size
-        screen_dist = term_size * 5 * 3 / (8 * (1 + 2));
-
-        for (int i = 0; !limit || i < frames; ++i) {
-            // Building the frame
-            // Dumping the frame into the terminal
-            // Clearing the frame from the terminal
-            buffer = build_frame(buffer, term_size, i, screen_dist);
-            dump_frame(buffer, term_size);
-            clear_terminal();
-        }
-    }
+    // Calls the runner function
+    runner(dynamic, limit, frames);
 
     return 0;
 }
