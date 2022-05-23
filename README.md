@@ -13,17 +13,11 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 ## Prerequisites for Windows
 
 * Install a compiler like [GCC](https://gcc.gnu.org/) or [Clang](https://clang.llvm.org/) for the C version
-* Install [Python](https://www.python.org/) for the Python version
 
-## How to run the Python version
+## How to build and run
 
-* Type `python torus.py` in the shell to run the Python version
-
-## How to build and run the C version
-
-* Type `gcc -o torus torus.c -lm` in the shell to compile using GCC
-* Type `clang -o torus torus.c -lm` in the shell to compile using Clang
-* Type `.\torus` in the shell to run the program
+* `gcc torus.c -o torus.exe` in the shell to compile using GCC
+* `.\torus.exe` in the shell to run the program
 
 # For Linux
 
@@ -35,16 +29,12 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 
 * `sudo pacman -S python3 gcc` to install the required compilers
 
-## How to compile and run C version
+## How to compile and run
 
-* `gcc -o torus torus.c -lm` to compile the C version
-* `./torus` to run the C version
+* `gcc torus.out -o torus.out -lm` to compile
+* `./torus.out` to run
 
-## How to run the Python version
-
-* `python3 torus.py` in the shell to run the Python version
-
-# Updates  to the C version
+# Updates
 
 * Added support for dynamic resolution based on current terminal size
 * Added Windows support
