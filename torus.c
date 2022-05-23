@@ -153,13 +153,13 @@ void help(char *prog_name) {
 Puts a spinning ASCII torus on the terminal.\n\
 \n\
 Options:\n\
-  -f, --frames              number of frames to be rendered\n\
-  -d, --dynamic             enables dynamic resolution\n\
-  -h, --help                displays this help screen and exits\n\
+  -f, --frames          number of frames to be rendered\n\
+  -d, --dynamic         enables dynamic resolution\n\
+  -h, --help            displays this help screen and exits\n\
 \n\
 Examples:\n\
-  %s --help          displays this help screen and exits\n\
-  %s -d -f 256       renders 256 frames with dynamic resolution enabled\n",
+  %s --help             displays this help screen and exits\n\
+  %s -d -f 256          renders 256 frames with dynamic resolution enabled\n",
            prog_name, prog_name, prog_name);
 }
 
@@ -202,9 +202,9 @@ int main(int argc, char **argv) {
         for (int i = 1; i < argc; ++i) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
 #if defined(_WIN32)
-                help("torus.exe");
+                help(argv[0]);
 #elif defined(__linux__)
-                help("torus.out");
+                help(argv[0]);
 #endif
                 return 0;
             } else if ((strcmp(argv[i], "-f") == 0 ||
