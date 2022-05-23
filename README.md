@@ -23,11 +23,11 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 
 ## Prerequisites for Debian based distributions
 
-* `sudo apt install python3 gcc` to install the required compilers
+* `sudo apt install gcc` to install the required compilers
 
 ## Prerequisites for Arch based distributions
 
-* `sudo pacman -S python3 gcc` to install the required compilers
+* `sudo pacman -S gcc` to install the required compilers
 
 ## How to compile and run
 
