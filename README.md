@@ -43,4 +43,4 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 
 # Screenshot
 
-![Screenshot](https://github.com/arkorty/Spinning-ASCII-Torus/blob/main/blob/screenshot.png)
+![Screenshot](blob/screenshot.png)
