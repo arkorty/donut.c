@@ -1,4 +1,4 @@
-CC=clang
+CC=gcc
 OL=Ofast
 
 build: torus.c
