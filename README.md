@@ -12,11 +12,11 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 
 ## Prerequisites for Windows
 
-* Install a compiler like [GCC](https://gcc.gnu.org/) or [Clang](https://clang.llvm.org/)
+* Install a compiler like [MinGW-w64](https://sourceforge.net/projects/mingw-w64/)
 
 ## How to build and run
 
-* `gcc torus.c -o torus.exe` in the shell to compile using GCC
+* `gcc -Ofast -o torus.exe torus.c -lm` in the shell to compile using MinGW-w64
 * `.\torus.exe` in the shell to run the program
 
 # For Linux
@@ -29,10 +29,11 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 
 * `sudo pacman -S gcc` to install the required compilers
 
-## How to compile and run
+## How to compile, run and clean
 
-* `gcc torus.c -o torus.out -lm` to compile
-* `./torus.out` to run
+* `make build` to compile
+* `make run` to run
+* `make clean` to clean
 
 # Updates
 
