@@ -117,8 +117,8 @@ char **build_frame(char **buffer, int term_size, int i, int scrn_dist) {
             float z_inv = 1 / z;
 
             // Calculating x and y coordinates of the 2D projection
-            int x_proj = term_size / 2 + scrn_dist * z_inv * x;
-            int y_proj = term_size / 2 - scrn_dist * z_inv * y;
+            int x_proj = (float)term_size / 2 + scrn_dist * z_inv * x;
+            int y_proj = (float)term_size / 2 - scrn_dist * z_inv * y;
 
             // Calculating luminous intensity
             float lumi_int =
@@ -201,11 +201,7 @@ int main(int argc, char **argv) {
     if (argc > 1) {
         for (int i = 1; i < argc; ++i) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
-#if defined(_WIN32)
                 help(argv[0]);
-#elif defined(__linux__)
-                help(argv[0]);
-#endif
                 return 0;
             } else if ((strcmp(argv[i], "-f") == 0 ||
                         strcmp(argv[i], "--frames") == 0) &&
