@@ -23,16 +23,16 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 
 ## Prerequisites for Debian based distributions
 
-* `sudo apt install gcc` to install the required compilers
+* `sudo apt install gcc` to install the required compiler
 
 ## Prerequisites for Arch based distributions
 
-* `sudo pacman -S gcc` to install the required compilers
+* `sudo pacman -S gcc` to install the required compiler
 
 ## How to compile, run and clean
 
-* `make build` to compile
-* `make run` to run
+* `make` to compile
+* `./torus` to run
 * `make clean` to clean
 
 # Updates
