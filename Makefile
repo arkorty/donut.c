@@ -1,11 +1,9 @@
 CC=gcc
-OL=Ofast
+CFLAGS=-Ofast -lm
+BIN=torus
 
-build: torus.c
-	$(CC) -$(OL) -o torus.out torus.c -lm
+$(BIN): $(BIN).c
+	$(CC) $(CFLAGS) $(BIN).c -o $(BIN)
 
-run: torus.out
-	./torus.out
-
-clean: torus.out
-	rm torus.out
+clean: $(BIN)
+	rm $(BIN)
