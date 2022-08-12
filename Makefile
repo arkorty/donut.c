@@ -3,7 +3,7 @@ CFLAGS=-Ofast -lm
 BIN=torus
 
 $(BIN): $(BIN).c
-	$(CC) $(CFLAGS) $(BIN).c -o $(BIN)
+	$(CC) $(BIN).c -o $(BIN) $(CFLAGS)
 
 clean: $(BIN)
 	rm $(BIN)
