@@ -200,17 +200,20 @@ int main(int argc, char **argv) {
     int frames = 0;
     if (argc > 1) {
         for (int i = 1; i < argc; ++i) {
-            if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
+            if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
                 help(argv[0]);
-                return 0;
-            } else if ((strcmp(argv[i], "-f") == 0 ||
-                        strcmp(argv[i], "--frames") == 0) &&
+                return EXIT_SUCCESS;
+            } else if ((!strcmp(argv[i], "-f") ||
+                        !strcmp(argv[i], "--frames")) &&
                        i + 1 < argc) {
                 limit = true;
-                frames = atoi(argv[i + 1]);
-            } else if (strcmp(argv[i], "-d") == 0 ||
-                       strcmp(argv[i], "--dynamic") == 0) {
+                frames = atoi(argv[++i]);
+            } else if (!strcmp(argv[i], "-d") ||
+                       !strcmp(argv[i], "--dynamic")) {
                 dynamic = true;
+            } else {
+                printf("Invalid argument passed\n");
+                return EXIT_FAILURE;
             }
         }
     }
@@ -218,5 +221,5 @@ int main(int argc, char **argv) {
     // Calls the runner function
     runner(dynamic, limit, frames);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
