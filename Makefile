@@ -7,3 +7,6 @@ $(BIN): $(BIN).c
 
 clean: $(BIN)
 	rm $(BIN)
+
+run: $(BIN)
+	./$(BIN) -d
