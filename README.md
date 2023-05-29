@@ -37,9 +37,9 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 
 # Updates
 
-- Added support for dynamic resolution based on current terminal size
+- Added support for dynamic resolution based on the size of the terminal
 - Added Windows support
-- Added support for on-the-fly dynamic resolution
+- Added support for dynamic resolution
 - Added help option to the program
 
 # Screenshot
