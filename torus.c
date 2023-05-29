@@ -77,8 +77,7 @@ char **build_frame(char **buffer, int term_size, int i, int scrn_dist) {
     float cos_x = cos(x), sin_x = sin(x); // Precomputing sines and cosines of x
     float cos_y = cos(y), sin_y = sin(y); // Precomputing sines and cosines of y
 
-    float z_buffer[term_size]
-                  [term_size]; // Declaring buffer for storing z coordinates
+    float z_buffer[term_size][term_size]; // Declaring buffer for storing z coordinates
 
     // Initializing frame buffer and z buffer
     for (int i = 0; i < term_size; ++i)
@@ -103,12 +102,8 @@ char **build_frame(char **buffer, int term_size, int i, int scrn_dist) {
             float circle_x = 2 + 1 * cos_theta, circle_y = 1 * sin_theta;
 
             // Calculating the x and y coordinates after the revolution
-            float x =
-                circle_x * (cos_y * cos_alpha + sin_x * sin_y * sin_alpha) -
-                circle_y * cos_x * sin_y;
-            float y =
-                circle_x * (sin_y * cos_alpha - sin_x * cos_y * sin_alpha) +
-                circle_y * cos_x * cos_y;
+            float x = circle_x * (cos_y * cos_alpha + sin_x * sin_y * sin_alpha) - circle_y * cos_x * sin_y;
+            float y = circle_x * (sin_y * cos_alpha - sin_x * cos_y * sin_alpha) + circle_y * cos_x * cos_y;
 
             // Calculating z
             float z = 5 + cos_x * circle_x * sin_alpha + circle_y * sin_x;
@@ -121,10 +116,7 @@ char **build_frame(char **buffer, int term_size, int i, int scrn_dist) {
             int y_proj = (float)term_size / 2 - scrn_dist * z_inv * y;
 
             // Calculating luminous intensity
-            float lumi_int =
-                cos_alpha * cos_theta * sin_y - cos_x * cos_theta * sin_alpha -
-                sin_x * sin_theta +
-                cos_y * (cos_x * sin_theta - cos_theta * sin_x * sin_alpha);
+            float lumi_int = cos_alpha * cos_theta * sin_y - cos_x * cos_theta * sin_alpha - sin_x * sin_theta + cos_y * (cos_x * sin_theta - cos_theta * sin_x * sin_alpha);
 
             /* Checking if surface is pointing away from the point of view
              * Also checking if the point is closer than any other point
@@ -206,13 +198,10 @@ int main(int argc, char **argv) {
             if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
                 help(argv[0]);
                 return EXIT_SUCCESS;
-            } else if ((!strcmp(argv[i], "-f") ||
-                        !strcmp(argv[i], "--frames")) &&
-                       i + 1 < argc) {
+            } else if ((!strcmp(argv[i], "-f") || !strcmp(argv[i], "--frames")) && i + 1 < argc) {
                 limit = true;
                 frames = atoi(argv[++i]);
-            } else if (!strcmp(argv[i], "-d") ||
-                       !strcmp(argv[i], "--dynamic")) {
+            } else if (!strcmp(argv[i], "-d") || !strcmp(argv[i], "--dynamic")) {
                 dynamic = true;
             } else {
                 printf("Invalid argument passed\n");
