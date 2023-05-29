@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Ofast -lm
+CFLAGS=-O2 -lm
 BIN=torus
 
 $(BIN): $(BIN).c
