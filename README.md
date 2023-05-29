@@ -32,7 +32,7 @@ Puts a spinning ASCII torus (mathematical name for a doughnut-shaped object) on 
 ## How to compile, run and clean
 
 - `make` to build the program
-- `./torus` to run the program
+- `make run` to execute the program
 - `make clean` to remove the binary
 
 # Updates
