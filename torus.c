@@ -173,6 +173,9 @@ void runner(bool dynamic, bool limit, int frames) {
     for (int i = 0; !limit || i < frames; ++i) {
         if (dynamic && i % 32 == 0 && term_size - terminal_size() != 0) {
             // Frees the old frame buffer
+            for (int i = 0; i < term_size; ++i) {
+                free(buffer[i]);
+            }
             free(buffer);
 
             // Reallocates the frame buffer as per new terminal size
