@@ -92,7 +92,7 @@ char **build_frame(char **buffer, int term_size, int i, int scrn_dist) {
         // Precomputing sines and cosines of theta
         float cos_theta = cos(theta), sin_theta = sin(theta);
 
-        // Loop uses alpha to revolve the circle around the center of the torus
+        // Loop uses alpha to revolve the circle around the center of the donut
         for (float alpha = 0; alpha < 6.283186; alpha += STEP_ALPHA) {
             // Precomputing sines and cosines of alpha
             float cos_alpha = cos(alpha), sin_alpha = sin(alpha);
@@ -142,7 +142,7 @@ char **build_frame(char **buffer, int term_size, int i, int scrn_dist) {
 
 void help(char *prog_name) {
     printf("Usage: %s [OPTION]...\n\
-Puts a spinning ASCII torus on the terminal.\n\
+Puts a spinning ASCII donut on the terminal.\n\
 \n\
 Options:\n\
   -f, --frames          number of frames to be rendered\n\
@@ -161,7 +161,7 @@ void runner(bool dynamic, bool limit, int frames) {
     int scrn_dist = term_size * 5 * 3 / (8 * (1 + 2));
     char **buffer = allocate_memory(term_size);
 
-    // Loop rotates the torus around both the axes
+    // Loop rotates the donut around both the axes
     for (int i = 0; !limit || i < frames; ++i) {
         if (dynamic && i % 32 == 0 && term_size - terminal_size() != 0) {
             // Frees the old frame buffer
