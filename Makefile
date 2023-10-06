@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-O2 -lm
-BIN=torus
+BIN=donut
 
 $(BIN): $(BIN).c
 	$(CC) $(BIN).c -o $(BIN) $(CFLAGS)

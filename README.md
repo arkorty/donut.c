@@ -1,6 +1,6 @@
 # Description
 
-Puts a spinning ASCII torus on the terminal. Original post by Andy Sloane can be found [here](https://www.a1k0n.net/2011/07/20/donut-math.html).
+Spinning ASCII donut on the terminal. Original post by Andy Sloane can be found [here](https://www.a1k0n.net/2011/07/20/donut-math.html).
 
 # How to run
 
@@ -16,8 +16,8 @@ Puts a spinning ASCII torus on the terminal. Original post by Andy Sloane can be
 
 ## How to build and run
 
-- `gcc -O2 -o torus.exe torus.c -lm` in the shell to compile using MinGW-w64
-- `.\torus.exe` in the shell to run the program
+- `gcc -O2 -o donut.exe donut.c -lm` in the shell to compile using MinGW-w64
+- `.\donut.exe` in the shell to run the program
 
 # For Linux
 
